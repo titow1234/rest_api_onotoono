@@ -1,0 +1,55 @@
+services:
+
+  server:
+    build:
+      context: .
+    ports:
+      - 8080:8080
+    networks:
+      - my-network
+    # secrets:
+    #   - db-password    
+    depends_on:
+      db:
+        condition: service_healthy
+    
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/client
+      - SPRING_DATASOURCE_USERNAME=titow1234
+      - SPRING_DATASOURCE_PASSWORD=123456
+#      - SPRING_DATASOURCE_PASSWORD_FILE=/run/secrets/db-password
+  
+  db:
+    image: postgres
+    restart: always
+#     user: postgres
+    # secrets:
+    #   - db-password
+    networks:
+      - my-network
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=client
+      - POSTGRES_USER=titow1234
+      - POSTGRES_PASSWORD=boca5454
+#      - POSTGRES_PASSWORD_FILE=/run/secrets/db-password
+    ports:
+      - 5435:5432
+#     expose:
+#       - 5432
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "titow1234", "-d", "empresita" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  db-data:
+
+# secrets:
+#   db-password:
+#     file: db/password.txt
+
+networks:
+  my-network:
