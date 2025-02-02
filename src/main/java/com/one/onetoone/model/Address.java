@@ -1,5 +1,8 @@
 package com.one.onetoone.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+//import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,6 +20,12 @@ public class Address {
     private String city;
 
     @OneToOne(mappedBy = "addres")
+    /**
+     * Se coloca en el lado "inverso" de la relación. Indica que esta
+     * parte de la relación no debe ser serializada, evitando así la recursión infinita.
+     */
+    @JsonBackReference
+    //@JsonIgnore
     private User user;
 
     public Address(String street, String city, User user) {

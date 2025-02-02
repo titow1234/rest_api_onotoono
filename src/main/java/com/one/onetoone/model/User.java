@@ -1,5 +1,7 @@
 package com.one.onetoone.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,6 +26,10 @@ public class User {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "addres_id", referencedColumnName = "id")
+    /**
+     * Se coloca en el lado "propietario" de la relación. Indica que esta parte de la relación debe ser serializada.
+     */
+    @JsonManagedReference
     private Address address;
 
     public User(String userName, Address address) {
