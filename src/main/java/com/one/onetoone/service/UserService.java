@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.one.onetoone.model.User;
+import com.one.onetoone.model.Address;
 import com.one.onetoone.repository.UserRepository;
 
 /**
@@ -40,11 +41,16 @@ public class UserService {
     }
 
     public User updateUser(Long id, User user) {
+        Address address = user.getAddress();
         User otherUser = userRepository.findById(id)
                                        .orElseThrow(() -> new RuntimeException("El usuario con " + id + " que se intenta actualizar no existe"));
+        Address otherAddress =otherUser.getAddress();
         
+        otherAddress.setStreet(address.getStreet());
+        otherAddress.setCity(address.getCity());
+
         otherUser.setUserName(user.getUserName());
-        otherUser.setAddress(user.getAddress());
+        otherUser.setAddress(otherAddress);
         
         return userRepository.save(otherUser);
     }

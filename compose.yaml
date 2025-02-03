@@ -1,6 +1,6 @@
 services:
 
-  server:
+  onetoone:
     build:
       context: .
     ports:
@@ -14,9 +14,9 @@ services:
         condition: service_healthy
     
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/client
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/cliente
       - SPRING_DATASOURCE_USERNAME=titow1234
-      - SPRING_DATASOURCE_PASSWORD=123456
+      - SPRING_DATASOURCE_PASSWORD=boca5454
 #      - SPRING_DATASOURCE_PASSWORD_FILE=/run/secrets/db-password
   
   db:
@@ -28,9 +28,9 @@ services:
     networks:
       - my-network
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - db-datita:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=client
+      - POSTGRES_DB=cliente
       - POSTGRES_USER=titow1234
       - POSTGRES_PASSWORD=boca5454
 #      - POSTGRES_PASSWORD_FILE=/run/secrets/db-password
@@ -39,13 +39,13 @@ services:
 #     expose:
 #       - 5432
     healthcheck:
-      test: [ "CMD", "pg_isready", "-U", "titow1234", "-d", "empresita" ]
+      test: [ "CMD", "pg_isready", "-U", "titow1234", "-d", "cliente" ]
       interval: 10s
       timeout: 5s
       retries: 5
 
 volumes:
-  db-data:
+  db-datita:
 
 # secrets:
 #   db-password:
